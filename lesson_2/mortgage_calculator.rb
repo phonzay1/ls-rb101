@@ -7,7 +7,7 @@
 # Calculate loan duration in months
 # Calculate monthly interest rate
 # Calculate monthly payment
-# Return monthly interest rate and monthly payment amount to user.
+# Return loan duration in months and monthly interest rate/payment to user.
 
 def prompt(message)
   puts ">> #{message}"
@@ -24,7 +24,7 @@ loop do # main loop
   loan_amount = ''
   loop do # loan amount loop
     prompt("Please enter your loan amount.")
-    prompt("Do not include commas or dollar signs.")
+    prompt("Do not include commas or dollar signs: ex. enter $50,000 as 50000")
     loan_amount = gets.chomp
     if valid_number?(loan_amount)
       loan_amount = loan_amount.to_f
@@ -37,7 +37,7 @@ loop do # main loop
   apr = ''
   loop do # APR loop
     prompt("Please enter your Annual Percentage Rate (APR).")
-    prompt("5% can be entered as 5, 7.75% can be entered as 7.75, etc.")
+    prompt("Do not include the % symbol: ex. enter 5.5% as 5.5")
     apr = gets.chomp
     if valid_number?(apr)
       apr = apr.to_f
@@ -66,6 +66,7 @@ loop do # main loop
                     (monthly_interest_rate /
                     (1 - (1 + monthly_interest_rate)**(-duration_months)))
 
+  prompt("Your loan duration is #{duration_months.round} months")
   prompt("Your monthly interest rate is #{(monthly_interest_rate * 100).round(2)}%")
   prompt("Your monthly payment is $#{monthly_payment.round(2)}")
 
