@@ -15,16 +15,16 @@ def number?(num)
 end
 
 def operation_to_message(op)
-  word = case op
+  word =  case op
           when '1'
             'Adding'
-            when '2'
-              'Subtracting'
-            when '3'
-              'Multiplying'
-            when '4'
-              'Dividing'
-            end
+          when '2'
+            'Subtracting'
+          when '3'
+            'Multiplying'
+          when '4'
+            'Dividing'
+          end
   word
 end
 
@@ -53,7 +53,7 @@ loop do # main loop
       prompt(MESSAGES['valid_num'])
     end
   end
-  
+
   number2 = ''
   loop do
     prompt(MESSAGES['second_num'])
@@ -64,18 +64,18 @@ loop do # main loop
       prompt(MESSAGES['valid_num'])
     end
   end
-  
+
 prompt(MESSAGES['operation'])
 #  operator_prompt = <<-MSG
-#  What operation would you like to perform? 
-#    1) add 
-#    2) subtract 
-#    3) multiply 
+#  What operation would you like to perform?
+#    1) add
+#    2) subtract
+#    3) multiply
 #    4) divide
 #    MSG
-  
+
 #  prompt(operator_prompt)
-  
+
   operator = ''
   loop do
     operator = gets.chomp
@@ -85,9 +85,9 @@ prompt(MESSAGES['operation'])
       prompt(MESSAGES['valid_operation'])
     end
   end
-  
+
   prompt("#{operation_to_message(operator)} the two numbers...")
-  
+
   result =  case operator
             when '1'
               number1.to_f + number2.to_f
@@ -98,9 +98,9 @@ prompt(MESSAGES['operation'])
             when '4'
               number1.to_f / number2.to_f
             end
-            
+
   prompt("The result is #{result}")
-  
+
   prompt(MESSAGES['again'])
   answer = gets.chomp
   break unless answer.downcase.start_with?('y')

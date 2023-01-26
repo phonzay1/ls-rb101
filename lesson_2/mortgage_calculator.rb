@@ -4,7 +4,7 @@
 # Check that APR is a valid number, and convert to decimal form then to a float
 # Ask user for loan duration in years and months
 # Assign loan duration to an array with [years, months]
-# Convert the numbers in the array to a number equaling the loan duration in months. 
+# Convert the numbers in the array to a number equaling the loan duration in months.
 # If unable to calculate a valid number, prompt user to try again.
 # Calculate monthly interest rate.
 # Calculate monthly payment.
@@ -33,7 +33,7 @@ loop do # main loop
     prompt("Sorry, that doesn't look like a valid number.")
   end
   end
-  
+
   apr = ''
   loop do # APR loop
   prompt("Please enter your Annual Percentage Rate (APR).
@@ -46,7 +46,7 @@ loop do # main loop
     prompt("Sorry, that doesn't look like a valid number.")
   end
   end
-  
+
   duration_years = ''
   loop do # loan duration loop
   prompt("Please enter your loan duration in years.")
