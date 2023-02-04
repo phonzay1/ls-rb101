@@ -13,62 +13,93 @@ def prompt(message)
   puts ">> #{message}"
 end
 
-def valid_number?(num)
+def positive_float?(num)
+  (Float(num, exception: false)) && (Float(num) > 0)
+end
+
+def valid_apr?(num)
   (Float(num, exception: false)) && (Float(num) >= 0)
+end
+
+def prompt_user_loan_amount
+  loan_amount = ''
+  loop do
+    prompt("Please enter your loan amount.")
+    prompt("Do not include commas or dollar signs: ex. enter $50,000 as 50000")
+    loan_amount = gets.chomp
+    if positive_float?(loan_amount)
+      return loan_amount.to_f
+    else
+      prompt("Sorry, that doesn't look like a valid number.")
+    end
+  end
+end
+
+def prompt_user_apr
+  apr = ''
+  loop do
+    prompt("Please enter your Annual Percentage Rate (APR).")
+    prompt("Do not include the % symbol: ex. enter 5.5% as 5.5")
+    apr = gets.chomp
+    if valid_apr?(apr)
+      return apr.to_f
+    else
+      prompt("Sorry, that doesn't look like a valid number.")
+    end
+  end
+end
+
+def prompt_user_duration
+  duration_years = ''
+  loop do
+    prompt("Please enter your loan duration in years.")
+    duration_years = gets.chomp
+    if positive_float?(duration_years)
+      return duration_years.to_f
+    else
+      prompt("Sorry, that doesn't look like a valid number.")
+    end
+  end
+end
+
+def calc_monthly_payment(loan_amount, apr, duration_years)
+  duration_months = duration_years * 12
+  monthly_interest_rate = (apr * 0.01) / 12
+
+  if apr == 0.0
+    monthly_payment = loan_amount / duration_months
+  else
+    monthly_payment = loan_amount *
+                      (monthly_interest_rate /
+                      (1 - (1 + monthly_interest_rate)**(-duration_months)))
+  end
+  monthly_payment
+end
+
+def calc_months(years)
+  months = years * 12
+  months
+end
+
+def calc_monthly_interest_rate(apr)
+  monthly_interest_rate = (apr * 0.01) / 12
+  monthly_interest_rate
 end
 
 prompt("Welcome to the mortgage calculator!")
 prompt("You'll need your loan amount, APR, and loan duration to get started.")
 
-loop do # main loop
-  loan_amount = ''
-  loop do # loan amount loop
-    prompt("Please enter your loan amount.")
-    prompt("Do not include commas or dollar signs: ex. enter $50,000 as 50000")
-    loan_amount = gets.chomp
-    if valid_number?(loan_amount)
-      loan_amount = loan_amount.to_f
-      break
-    else
-      prompt("Sorry, that doesn't look like a valid number.")
-    end
-  end
+loop do
+  loan_amount = prompt_user_loan_amount
+  apr = prompt_user_apr
+  duration_years = prompt_user_duration
 
-  apr = ''
-  loop do # APR loop
-    prompt("Please enter your Annual Percentage Rate (APR).")
-    prompt("Do not include the % symbol: ex. enter 5.5% as 5.5")
-    apr = gets.chomp
-    if valid_number?(apr)
-      apr = apr.to_f
-      break
-    else
-      prompt("Sorry, that doesn't look like a valid number.")
-    end
-  end
+  monthly_payment = calc_monthly_payment(loan_amount, apr, duration_years)
 
-  duration_years = ''
-  loop do # loan duration loop
-    prompt("Please enter your loan duration in years.")
-    duration_years = gets.chomp
-    if valid_number?(duration_years)
-      duration_years = duration_years.to_f
-      break
-    else
-      prompt("Sorry, that doesn't look like a valid number.")
-    end
-  end
-
-  duration_months = duration_years * 12
-  monthly_interest_rate = (apr * 0.01) / 12
-
-  monthly_payment = loan_amount *
-                    (monthly_interest_rate /
-                    (1 - (1 + monthly_interest_rate)**(-duration_months)))
-
-  prompt("Your loan duration is #{duration_months.round} months")
-  prompt("Your monthly interest rate is #{(monthly_interest_rate * 100).round(2)}%")
-  prompt("Your monthly payment is $#{monthly_payment.round(2)}")
+  prompt("Your loan amount is $#{format('%.2f', loan_amount)}")
+  prompt("Your loan duration is #{calc_months(duration_years).round} months")
+  prompt("Your monthly interest rate is #{format('%.2f', (calc_monthly_interest_rate(apr) * 100))}%")
+  prompt("Your monthly payment is $#{format('%.2f', monthly_payment)}")
 
   prompt("Would you like to perform another calculation? (Enter Y for yes)")
   again = gets.chomp
