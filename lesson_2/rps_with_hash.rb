@@ -1,3 +1,6 @@
+require 'yaml'
+MESSAGES = YAML.load_file('rpsls_messages.yml')
+
 # Constants
 VALID_CHOICES = %w(rock paper scissors lizard spock)
 WIN_CONDITIONS = {
@@ -13,52 +16,53 @@ def prompt(message)
   puts("=> #{message}")
 end
 
-def win?(player1, player2)
-  WIN_CONDITIONS[player1].include?(player2)
+def win?(player1_fist, player2_fist)
+  WIN_CONDITIONS[player1_fist].include?(player2_fist)
 end
 
-def display_results(player, computer)
-  if win?(player, computer)
+def display_results(user_fist, comp_fist)
+  if win?(user_fist, comp_fist)
     prompt("You won!")
-  elsif win?(computer, player)
+  elsif win?(comp_fist, user_fist)
     prompt("Computer won!")
   else
     prompt("It's a tie!")
   end
 end
 
-def count_wins(player, opponent, wins)
-  if win?(player, opponent)
-    wins += 1
-  end
+def update_win_number(player_won, wins)
+  wins += 1 if player_won
   wins
 end
 
-def choice_name(choice)
-  word =  case choice
-          when 'r', 'rock'
-            'rock'
-          when 'p', 'paper'
-            'paper'
-          when 'sc', 'scissors'
-            'scissors'
-          when 'l', 'lizard'
-            'lizard'
-          when 'sp', 'spock'
-            'spock'
-          when 's'
-            's'
-          end
-  word
+def full_fist_name(fist)
+  full_word = case fist
+              when 'r', 'rock'
+                'rock'
+              when 'p', 'paper'
+                'paper'
+              when 'sc', 'scissors'
+                'scissors'
+              when 'l', 'lizard'
+                'lizard'
+              when 'sp', 'spock'
+                'spock'
+              when 's'
+                's'
+              end
+  full_word
+end
+
+def option_to_show_rules
+  prompt(MESSAGES['show_rules_option'])
+  prompt(MESSAGES['game_rules']) if gets.chomp.downcase.start_with?('y')
 end
 
 def prompt_user_choice
   choice = ''
   loop do
-    prompt("Choose one: rock, paper, scissors, lizard, or spock. If you'd " \
-    "prefer, you can type: r for rock, sc for scissors, p for paper, l for " \
-    "lizard, sp for spock")
-    choice = choice_name(gets.chomp.downcase)
+    prompt(MESSAGES['user_choice_instructions'])
+    choice = full_fist_name(gets.chomp.downcase)
 
     if VALID_CHOICES.include?(choice)
       return choice
@@ -70,6 +74,11 @@ def prompt_user_choice
   end
 end
 
+def display_win_totals(player_wins, comp_wins)
+  prompt("Player has won #{player_wins} times")
+  prompt("Computer has won #{comp_wins} times")
+end
+
 def play_again?
   prompt("Would you like to play again? (enter y for yes)")
   gets.chomp.downcase.start_with?('y')
@@ -77,9 +86,9 @@ end
 
 # Game play starts for the user
 loop do # option for playing multiple rounds
-  prompt("Welcome to the Rock-Paper-Scissors-Lizard-Spock game. You'll be " \
-  "playing against the computer. The first player with 3 wins is the grand " \
-  "winner!")
+  prompt(MESSAGES['welcome'])
+
+  option_to_show_rules
 
   player_wins = 0
   comp_wins = 0
@@ -91,11 +100,10 @@ loop do # option for playing multiple rounds
     prompt("You chose #{user_choice}; Computer chose #{computer_choice}")
     display_results(user_choice, computer_choice)
 
-    player_wins = count_wins(user_choice, computer_choice, player_wins)
-    comp_wins = count_wins(computer_choice, user_choice, comp_wins)
+    player_wins = update_win_number(win?(user_choice, computer_choice), player_wins)
+    comp_wins = update_win_number(win?(computer_choice, user_choice), comp_wins)
 
-    prompt("Player has won #{player_wins} times")
-    prompt("Computer has won #{comp_wins} times")
+    display_win_totals(player_wins, comp_wins)
 
     if player_wins == 3
       prompt("You have reached 3 wins - you're the grand winner!")

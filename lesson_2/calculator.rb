@@ -1,6 +1,6 @@
 # ask user for 2 numbers
 # ask user which operation to perform
-# perform operation with the two nubmers
+# perform operation with the two numbers
 # output the result
 
 require 'yaml'

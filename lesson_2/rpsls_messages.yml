@@ -1,0 +1,15 @@
+welcome: "Welcome to the Rock-Paper-Scissors-Lizard-Spock game. You'll be
+  playing against the computer. The first player with 3 wins is the grand
+  winner!"
+show_rules_option: "Would you like to see the game rules? (enter y for yes)"
+game_rules: "Each player will choose one move: rock, paper, scissors, lizard,
+  or spock. Rock beats scissors and lizard, paper beats rock and spock,
+  scissors beats paper and lizard, lizard beats spock and paper, spock beats
+  rock and scissors"
+user_choice_instructions: "Choose one: rock, paper, scissors, lizard, or spock.
+  If you'd prefer, you can type:\n
+  r for rock\n
+  sc for scissors\n
+  p for paper\n
+  l for lizard\n
+  sp for spock"
