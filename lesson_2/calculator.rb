@@ -6,6 +6,8 @@
 require 'yaml'
 MESSAGES = YAML.load_file('calculator_messages.yml')
 
+# puts MESSAGES.inspect
+
 def prompt(message)
   puts "=> #{message}"
 end
