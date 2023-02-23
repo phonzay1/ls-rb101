@@ -147,7 +147,8 @@ def print_in_box(text)
 
     loop do # loop to wrap text lines
       if text.size < 76
-        puts "| #{text.slice!(0..) + (' ' * (76-text.size))} |" # This puts the final | character too far to the right
+        text_line_length = text.size
+        puts "| #{text.slice!(0..(text.size-1)) + (' ' * (76-text_line_length))} |"
       else
         puts "| #{text.slice!(0..75)} |"
       end

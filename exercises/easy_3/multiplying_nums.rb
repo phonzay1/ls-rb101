@@ -28,11 +28,12 @@ end
 # still using the multiply method?
 
 def calc_exponent(num, exponent)
-    exponent.times do |num|
-    num_exp = 1
-    multiply(num_exp, num)
-    num_exp *= num
+  num_exp = 1
+
+  exponent.times do |_|
+  num_exp = multiply(num_exp, num)
   end
+  num_exp
 end
 
 puts calc_exponent(2, 1)
@@ -42,3 +43,4 @@ puts calc_exponent(2, 4)
 puts calc_exponent(2, 5)
 puts calc_exponent(2, 6)
 puts calc_exponent(2, 7)
+puts calc_exponent(5, 3)

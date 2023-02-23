@@ -26,24 +26,32 @@
 #   - Iterate through all numbers in range 1 - num, adding or multiplying them all together
 # - PRINT the result
 
+# def sum(number)
+#   counter = 1
+#   sum = 0
+#   until counter > number do
+#     sum += counter
+#     counter += 1
+#   end
+#   sum
+# end
+
 def sum(number)
-  counter = 1
-  sum = 0
-  until counter > number do
-    sum += counter
-    counter += 1
-  end
-  sum
+  (1..number).inject(:+)
 end
 
+# def product(number)
+#   counter = 1
+#   product = 1
+#   until counter > number do
+#     product *= counter
+#     counter += 1
+#   end
+#   product
+# end
+
 def product(number)
-  counter = 1
-  product = 1
-  until counter > number do
-    product *= counter
-    counter += 1
-  end
-  product
+  (1..number).inject(:*)
 end
 
 def valid_num?(string)
@@ -84,3 +92,7 @@ loop do # main loop
 end
 
 puts "Thank you for calculating. Goodbye!"
+
+
+
+

@@ -1,5 +1,5 @@
 # Formal Study Session 2/3/23
-# Intro to PEDAC! 
+# Intro to PEDAC!
 
 =begin
 Write a method that takes an array of consecutive letters as input and returns the missing letter.
@@ -55,7 +55,7 @@ GREAT IDEA!!
 def determine_missing_letter(arr)
   reference_alpha = ('a'..'z').to_a
   return [] if arr == []
-  start = reference_alpha.index(arr[0])
+  start = reference_alpha.index(arr[0].downcase)
   arr.each do |letter|
     if letter.downcase != reference_alpha[start]
       return reference_alpha[start]
